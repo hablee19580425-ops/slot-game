@@ -28,12 +28,12 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 # Copy server code
 COPY --from=builder /app/server ./server
-# Copy database file (Note: This will be overwritten if using a volume, but good for init)
-# Ideally, the database should be initialized if it doesn't exist on startup
-COPY --from=builder /app/server/deepsea.db ./server/deepsea.db
-# Copy database.cjs as it is required by index.cjs
-COPY --from=builder /app/server/database.cjs ./server/database.cjs
 
+# Ensure the app user owns the files (important for SQLite write permissions)
+RUN chown -R node:node /app
+
+# Switch to non-root user
+USER node
 
 # Expose port
 EXPOSE 3001
