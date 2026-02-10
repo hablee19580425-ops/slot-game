@@ -9,7 +9,3 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 18.17.0
-    disk:
-      name: sqlite-data
-      mountPath: /app/server
-      sizeGB: 1
