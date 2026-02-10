@@ -23,6 +23,7 @@ WORKDIR /app
 
 # Install production dependencies only
 COPY package*.json ./
+RUN apk add --no-cache python3 make g++
 RUN npm ci --only=production
 
 # Copy built assets from builder stage
